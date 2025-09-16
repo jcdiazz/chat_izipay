@@ -11,7 +11,7 @@ st.set_page_config(
 )
 
 # Configuración de la API de Izipay
-API_ENDPOINT = "https://dev-izi-chatbot-genai-api-v1-dl7olq7kiq-uc.a.run.app/bloque2"
+API_ENDPOINT = "https://dev-izi-chatbot-genai-api-v1-322392286721.us-central1.run.app/bloque2"
 API_HEADERS = {
     "Content-Type": "application/json",
     "token": "dev-chatpgt-token-xbpr435"
