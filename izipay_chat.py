@@ -67,6 +67,9 @@ def call_api(message, user_id="dev-user-test-003", session_id=None):
             # Información adicional que se puede mostrar
             trace = result.get("trace", "")
             trace_description = result.get("trace_description", "")
+            satisfaction = result.get("satisfaction", "")
+            transfer = result.get("transfer", "")
+            finish = result.get("finish", "")
             citations = result.get("citations", [])
 
             return {
@@ -74,6 +77,9 @@ def call_api(message, user_id="dev-user-test-003", session_id=None):
                 "trace": trace,
                 "trace_description": trace_description,
                 "citations": citations,
+                "satisfaction": satisfaction,
+                "transfer": transfer,
+                "finish": finish,
                 "raw_response": result
             }, None
         else:
