@@ -1,2 +1,2 @@
-# chat_izipay
+# Chat izipay
 Chatbot Gen AI 
