@@ -88,9 +88,9 @@ def call_api(message, user_id="dev-user-test-003", session_id=None):
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "session_id" not in st.session_state:
-    st.session_state.session_id = f"streamlit-session-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+    st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}"
 if "user_id" not in st.session_state:
-    st.session_state.user_id = "streamlit-user-001"
+    st.session_state.user_id = "user-00001"
 
 # Título de la aplicación
 st.title("🤖 IziBot")
@@ -98,9 +98,9 @@ st.markdown("---")
 
 # Sidebar con información
 with st.sidebar:
-    st.header("ℹ️ Información")
-    st.write("Chat IziBot - Asistente virtual de Izipay")
-    st.write("Obtén ayuda con tus productos y servicios POS")
+    st.header("ℹ️ Temáticas")
+    st.write("Mis datos de comercio")
+    st.write("Mis ventas y abonos")
 
     # Configuración de usuario
     st.subheader("👤 Configuración")
@@ -116,12 +116,6 @@ with st.sidebar:
         # Generar nuevo session_id
         st.session_state.session_id = f"streamlit-session-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
         st.rerun()
-
-    # Mostrar configuración
-    with st.expander("⚙️ Configuración API"):
-        st.write(f"**Endpoint:** Izipay ChatBot API")
-        st.write(f"**Mensajes:** {len(st.session_state.messages)}")
-        st.write(f"**Canal:** Web (Streamlit)")
 
 # Contenedor para el chat
 chat_container = st.container()
