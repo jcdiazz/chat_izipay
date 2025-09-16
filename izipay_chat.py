@@ -93,8 +93,7 @@ if "user_id" not in st.session_state:
     st.session_state.user_id = "streamlit-user-001"
 
 # Título de la aplicación
-st.title("🤖 IziBot - Asistente de Izipay")
-st.markdown("*Obtén ayuda con tus consultas sobre servicios y terminales POS*")
+st.title("🤖 IziBot")
 st.markdown("---")
 
 # Sidebar con información
@@ -193,14 +192,3 @@ if prompt := st.chat_input("Escribe tu mensaje aquí..."):
                 "timestamp": response_timestamp,
                 "metadata": response_info
             })
-
-# Información adicional en el footer
-st.markdown("---")
-st.markdown(
-    """
-    <div style='text-align: center; color: #666; font-size: 0.8em;'>
-        🏪 IziBot - Asistente Virtual de Izipay | Soporte para terminales POS
-    </div>
-    """,
-    unsafe_allow_html=True
-)
