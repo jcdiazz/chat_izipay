@@ -167,17 +167,16 @@ if prompt := st.chat_input("Escribe tu mensaje aquí..."):
             # Mostrar información adicional si está disponible
             if response_info and response_info.get("trace_description"):
                 with st.expander("📋 Información adicional"):
-                    st.write(f"**Categoría:** {response_info['trace_description']}")
+                    st.write(f"**Descripción de la traza:** {response_info['trace_description']}")
                     if response_info.get("trace"):
-                        st.write(f"**Código:** {response_info['trace']}")
+                        st.write(f"**Traza:** {response_info['trace']}")
 
                     # Mostrar citas si están disponibles
                     if response_info.get("citations"):
-                        st.write("**Fuentes consultadas:**")
-                        for i, citation in enumerate(response_info["citations"][:2]):  # Mostrar máximo 2 citas
-                            source = citation.get("metadata", {}).get("source", "N/A")
+                        st.write("**Citas:**")
+                        for i, citation in enumerate(response_info["citations"][:3]):  # Mostrar máximo 3 citas
                             option = citation.get("metadata", {}).get("option", "N/A")
-                            st.write(f"- {source}: {option}")
+                            st.write(f"- {option}")
 
             # Agregar respuesta del asistente al historial
             st.session_state.messages.append({
