@@ -14,7 +14,7 @@ st.set_page_config(
 API_ENDPOINT = "https://dev-izi-chatbot-genai-api-v1-dl7olq7kiq-uc.a.run.app/bloque2"
 API_HEADERS = {
     "Content-Type": "application/json",
-    "token": "dev-izipay-chatpgt-token-xypj635"
+    "token": "dev-chatpgt-token-xbpr435"
 }
 
 def call_api(message, user_id="dev-user-test-003", session_id=None):
