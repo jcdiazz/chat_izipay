@@ -167,9 +167,12 @@ if prompt := st.chat_input("Escribe tu mensaje aquí..."):
             # Mostrar información adicional si está disponible
             if response_info and response_info.get("trace_description"):
                 with st.expander("📋 Información adicional"):
-                    st.write(f"**Descripción de la traza:** {response_info['trace_description']}")
                     if response_info.get("trace"):
                         st.write(f"**Traza:** {response_info['trace']}")
+                    st.write(f"**Descripción de la traza:** {response_info['trace_description']}")
+                    st.write(f"**Satisfacción:** {response_info['satisfaction']}")
+                    st.write(f"**Transferir:** {response_info['transfer']}")
+                    st.write(f"**Finalizar:** {response_info['finish']}")
 
                     # Mostrar citas si están disponibles
                     if response_info.get("citations"):
