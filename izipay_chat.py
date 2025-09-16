@@ -17,17 +17,17 @@ API_HEADERS = {
     "token": "dev-chatpgt-token-xbpr435"
 }
 
-def call_api(message, user_id="dev-user-test-003", session_id=None):
+def call_api(message, user_id="dev-user-test-003", session_id=None, tematica="datos_comercio"):
     """
-    Función para llamar a la API de Izipay
+    Función para llamar a la API de Izipay con diferentes configuraciones según la temática
     """
     try:
         # Generar session_id único si no se proporciona
         if not session_id:
             session_id = f"streamlit-session-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
 
-        # Payload específico para la API de Izipay
-        payload = {
+        # Configuración base común
+        base_config = {
             "question": message,
             "metadata": {
                 "userId": user_id,
@@ -41,21 +41,28 @@ def call_api(message, user_id="dev-user-test-003", session_id=None):
                     "assistant_role": "Actúa como asistente virtual de Izipay.",
                     "company_name": "Izipay",
                     "company_activity": "Venta de servicios y terminales de puntos de venta llamados POS para la compra y venta.",
-                    "conversation_purpose": "Atiende las consultas de los usuarios con entusiasmo y responde siempre de manera clara, breve y precisa. Tu misión principal es brindar soporte sobre todos los productos y servicios de Izipay, especialmente los terminales POS y cualquier otro servicio relacionado.\n- Tono: Siempre animado, profesional y directo.\n- Saludo del usuario: Si el usuario inicia con un saludo, no devuelvas el saludo. En lugar de eso, dile que puedes ayudarlo con sus preguntas sobre sus datos de comercio.\n- Preguntas ambiguas: Si la pregunta no está clara, pide detalles específicos para poder ofrecer una respuesta adecuada.\n- Límites: Si no puedes resolver algo, redirige al usuario con instrucciones claras para contactar al equipo de soporte humano."
                 },
                 "config_params": {
                     "maxMinutes": "None",
                     "temperature": 0.3,
                     "k_top_retrieval": 3
-                },
-                "knowledge_stores": ["dev_izipay_index_daco_azureopenai"]
+                }
             }
         }
+
+        # Configuración específica según la temática
+        if tematica == "datos_comercio":
+            base_config["configuration"]["prompt_params"]["conversation_purpose"] = "Atiende las consultas de los usuarios con entusiasmo y responde siempre de manera clara, breve y precisa. Tu misión principal es brindar soporte sobre todos los productos y servicios de Izipay, especialmente los terminales POS y cualquier otro servicio relacionado.\n- Tono: Siempre animado, profesional y directo.\n- Saludo del usuario: Si el usuario inicia con un saludo, no devuelvas el saludo. En lugar de eso, dile que puedes ayudarlo con sus preguntas sobre sus datos de comercio.\n- Preguntas ambiguas: Si la pregunta no está clara, pide detalles específicos para poder ofrecer una respuesta adecuada.\n- Límites: Si no puedes resolver algo, redirige al usuario con instrucciones claras para contactar al equipo de soporte humano."
+            base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_daco_azureopenai"]
+        
+        elif tematica == "ventas_abonos":
+            base_config["configuration"]["prompt_params"]["conversation_purpose"] = "Atiende las consultas de los usuarios con entusiasmo y responde siempre de manera clara, breve y precisa. Tu misión principal es brindar soporte sobre todos los productos y servicios de Izipay, especialmente los terminales POS y cualquier otro servicio relacionado.\n- Tono: Siempre animado, profesional y directo.\n- Saludo del usuario: Si el usuario inicia con un saludo, no devuelvas el saludo. En lugar de eso, dile que puedes ayudarlo con sus preguntas sobre sus ventas y abonos.\n- Preguntas ambiguas: Si la pregunta no está clara, pide detalles específicos para poder ofrecer una respuesta adecuada.\n- Límites: Si no puedes resolver algo, redirige al usuario con instrucciones claras para contactar al equipo de soporte humano."
+            base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_veab_azureopenai"]
 
         response = requests.post(
             API_ENDPOINT,
             headers=API_HEADERS,
-            json=payload,
+            json=base_config,
             timeout=30
         )
 
@@ -97,6 +104,8 @@ if "session_id" not in st.session_state:
     st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}"
 if "user_id" not in st.session_state:
     st.session_state.user_id = "user-00001"
+if "tematica_seleccionada" not in st.session_state:
+    st.session_state.tematica_seleccionada = "datos_comercio"
 
 # Título de la aplicación
 st.title("🤖 IziBot")
@@ -105,8 +114,27 @@ st.markdown("---")
 # Sidebar con información
 with st.sidebar:
     st.header("ℹ️ Temáticas")
-    st.write("Mis datos de comercio")
-    st.write("Mis ventas y abonos")
+    
+    # Botones para seleccionar temática
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        if st.button("🏪 Mis datos de comercio", 
+                    use_container_width=True,
+                    type="primary" if st.session_state.tematica_seleccionada == "datos_comercio" else "secondary"):
+            st.session_state.tematica_seleccionada = "datos_comercio"
+            st.rerun()
+    
+    with col2:
+        if st.button("💰 Mis ventas y abonos", 
+                    use_container_width=True,
+                    type="primary" if st.session_state.tematica_seleccionada == "ventas_abonos" else "secondary"):
+            st.session_state.tematica_seleccionada = "ventas_abonos"
+            st.rerun()
+    
+    # Mostrar temática activa
+    tematica_nombre = "Mis datos de comercio" if st.session_state.tematica_seleccionada == "datos_comercio" else "Mis ventas y abonos"
+    st.success(f"**Temática activa:** {tematica_nombre}")
 
     # Configuración de usuario
     st.subheader("👤 Configuración")
@@ -143,19 +171,20 @@ if prompt := st.chat_input("Escribe tu mensaje aquí..."):
         "content": prompt,
         "timestamp": timestamp
     })
-
+    
     # Mostrar mensaje del usuario
     with st.chat_message("user"):
         st.markdown(prompt)
         st.caption(f"🕐 {timestamp}")
-
+    
     # Llamar a la API y mostrar respuesta
     with st.chat_message("assistant"):
         with st.spinner("IziBot está procesando tu consulta..."):
             response_data, error = call_api(
                 prompt, 
                 st.session_state.user_id, 
-                st.session_state.session_id
+                st.session_state.session_id,
+                st.session_state.tematica_seleccionada
             )
 
             if error:
@@ -194,3 +223,14 @@ if prompt := st.chat_input("Escribe tu mensaje aquí..."):
                 "timestamp": response_timestamp,
                 "metadata": response_info
             })
+
+# Información adicional en el footer
+st.markdown("---")
+st.markdown(
+    """
+    <div style='text-align: center; color: #666; font-size: 0.8em;'>
+        🤖 IziBot - Asistente Virtual de Izipay
+    </div>
+    """,
+    unsafe_allow_html=True
+)
