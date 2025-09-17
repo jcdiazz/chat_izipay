@@ -113,7 +113,7 @@ st.title(f"🤖 {tematica_nombre}")
 
 # Sidebar con información
 with st.sidebar:
-    st.header("ℹ️ Temáticas")
+    st.header("Temáticas")
     
     # Botones para seleccionar temática
     if st.button("🏪 Mis datos de comercio", 
@@ -129,7 +129,7 @@ with st.sidebar:
         st.rerun()
 
     # Configuración de usuario
-    st.subheader("⚙️ Configuración")
+    st.subheader("Configuración")
 
     # User ID con botón para generar nuevo
     st.write("User ID:")
