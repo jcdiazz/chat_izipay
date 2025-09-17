@@ -130,11 +130,16 @@ with st.sidebar:
 
     # Configuración de usuario
     st.subheader("⚙️ Configuración")
-    new_user_id = st.text_input("User ID:", value=st.session_state.user_id)
-    if new_user_id != st.session_state.user_id:
-        st.session_state.user_id = new_user_id
 
-    #st.write(f"**Session ID:** {st.session_state.session_id}")
+    # User ID con botón para generar nuevo
+    st.write("**User ID:**")
+    col1, col2 = st.columns([4, 1])
+    with col1:
+        st.code(st.session_state.user_id, language=None)
+    with col2:
+        if st.button("🔄", key="refresh_user", help="Generar nuevo User ID"):
+            st.session_state.user_id = f"USER-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+            st.rerun()
 
     # Session ID con botón para generar nuevo
     st.write("**Session ID:**")
