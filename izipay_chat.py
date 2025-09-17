@@ -108,11 +108,11 @@ if "tematica_seleccionada" not in st.session_state:
     st.session_state.tematica_seleccionada = "datos_comercio"
 
 # Título de la aplicación
-st.title("🤖 IziBot")
-# Mostrar temática activa
+#st.title("🤖 IziBot")
+
 tematica_nombre = "Mis datos de comercio" if st.session_state.tematica_seleccionada == "datos_comercio" else "Mis ventas y abonos"
-st.success(f"**Temática activa:** {tematica_nombre}")
-st.markdown("---")
+st.title(f"🤖 {tematica_nombre}")
+#st.markdown("---")
 
 # Sidebar con información
 with st.sidebar:
