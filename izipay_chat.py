@@ -17,7 +17,7 @@ API_HEADERS = {
     "token": "dev-chatpgt-token-xbpr435"
 }
 
-def call_api(message, user_id="user-X00001", session_id=None, tematica="datos_comercio"):
+def call_api(message, user_id="USER-00001", session_id=None, tematica="datos_comercio"):
     """
     Función para llamar a la API de Izipay con diferentes configuraciones según la temática
     """
@@ -101,9 +101,9 @@ def call_api(message, user_id="user-X00001", session_id=None, tematica="datos_co
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "session_id" not in st.session_state:
-    st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+    st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d%H%M%S')}"
 if "user_id" not in st.session_state:
-    st.session_state.user_id = "user-00001"
+    st.session_state.user_id = f"USER-{datetime.now().strftime('%Y%m%d%H%M%S')}"
 if "tematica_seleccionada" not in st.session_state:
     st.session_state.tematica_seleccionada = "datos_comercio"
 
