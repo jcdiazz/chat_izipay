@@ -108,11 +108,8 @@ if "tematica_seleccionada" not in st.session_state:
     st.session_state.tematica_seleccionada = "datos_comercio"
 
 # Título de la aplicación
-#st.title("🤖 IziBot")
-
 tematica_nombre = "Mis datos de comercio" if st.session_state.tematica_seleccionada == "datos_comercio" else "Mis ventas y abonos"
 st.title(f"🤖 {tematica_nombre}")
-#st.markdown("---")
 
 # Sidebar con información
 with st.sidebar:
@@ -134,10 +131,6 @@ with st.sidebar:
                     type="primary" if st.session_state.tematica_seleccionada == "ventas_abonos" else "secondary"):
             st.session_state.tematica_seleccionada = "ventas_abonos"
             st.rerun()
-    
-    # Mostrar temática activa
-    #tematica_nombre = "Mis datos de comercio" if st.session_state.tematica_seleccionada == "datos_comercio" else "Mis ventas y abonos"
-    #st.success(f"**Temática activa:** {tematica_nombre}")
 
     # Configuración de usuario
     st.subheader("👤 Configuración")
@@ -226,14 +219,3 @@ if prompt := st.chat_input("Escribe tu mensaje aquí..."):
                 "timestamp": response_timestamp,
                 "metadata": response_info
             })
-
-# Información adicional en el footer
-st.markdown("---")
-st.markdown(
-    """
-    <div style='text-align: center; color: #666; font-size: 0.8em;'>
-        🤖 IziBot - Asistente Virtual de Izipay
-    </div>
-    """,
-    unsafe_allow_html=True
-)
