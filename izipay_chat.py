@@ -132,30 +132,32 @@ with st.sidebar:
     st.subheader("⚙️ Configuración")
 
     # User ID con botón para generar nuevo
-    st.write("**User ID:**")
+    st.write("User ID:")
     col1, col2 = st.columns([4, 1])
     with col1:
         st.code(st.session_state.user_id, language=None)
     with col2:
         if st.button("🔄", key="refresh_user", help="Generar nuevo User ID"):
             st.session_state.user_id = f"USER-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+            st.session_state.messages = []
+            st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d%H%M%S')}"
             st.rerun()
 
     # Session ID con botón para generar nuevo
-    st.write("**Session ID:**")
+    st.write("Session ID:")
     col3, col4 = st.columns([4, 1])
     with col3:
         st.code(st.session_state.session_id, language=None)
     with col4:
         if st.button("🔄", key="refresh_session", help="Generar nueva Session ID"):
-            st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+            st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d%H%M%S')}"
             st.rerun()
 
     # Botón para limpiar el chat
     if st.button("🗑️ Limpiar Chat", use_container_width=True):
         st.session_state.messages = []
         # Generar nuevo session_id
-        st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+        st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d%H%M%S')}"
         st.rerun()
 
 # Contenedor para el chat
