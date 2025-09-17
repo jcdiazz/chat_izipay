@@ -116,21 +116,17 @@ with st.sidebar:
     st.header("ℹ️ Temáticas")
     
     # Botones para seleccionar temática
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        if st.button("🏪 Mis datos de comercio", 
-                    use_container_width=True,
-                    type="primary" if st.session_state.tematica_seleccionada == "datos_comercio" else "secondary"):
-            st.session_state.tematica_seleccionada = "datos_comercio"
-            st.rerun()
-    
-    with col2:
-        if st.button("💰 Mis ventas y abonos", 
-                    use_container_width=True,
-                    type="primary" if st.session_state.tematica_seleccionada == "ventas_abonos" else "secondary"):
-            st.session_state.tematica_seleccionada = "ventas_abonos"
-            st.rerun()
+    if st.button("🏪 Mis datos de comercio", 
+                use_container_width=True,
+                type="primary" if st.session_state.tematica_seleccionada == "datos_comercio" else "secondary"):
+        st.session_state.tematica_seleccionada = "datos_comercio"
+        st.rerun()
+
+    if st.button("💰 Mis ventas y abonos", 
+                use_container_width=True,
+                type="primary" if st.session_state.tematica_seleccionada == "ventas_abonos" else "secondary"):
+        st.session_state.tematica_seleccionada = "ventas_abonos"
+        st.rerun()
 
     # Configuración de usuario
     st.subheader("⚙️ Configuración")
@@ -138,7 +134,16 @@ with st.sidebar:
     if new_user_id != st.session_state.user_id:
         st.session_state.user_id = new_user_id
 
-    st.write(f"**Session ID:** {st.session_state.session_id}")
+    #st.write(f"**Session ID:** {st.session_state.session_id}")
+
+    # Session ID con botón para generar nuevo
+    st.write("**Session ID:**")
+    st.code(st.session_state.session_id, language=None)
+    
+    if st.button("🔄 Generar nueva Session ID", use_container_width=True):
+        st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+        st.success("Nueva Session ID generada!")
+        st.rerun()
 
     # Botón para limpiar el chat
     if st.button("🗑️ Limpiar Chat", use_container_width=True):
