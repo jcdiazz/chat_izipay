@@ -17,7 +17,7 @@ API_HEADERS = {
     "token": "dev-chatpgt-token-xbpr435"
 }
 
-def call_api(message, user_id="dev-user-test-003", session_id=None, tematica="datos_comercio"):
+def call_api(message, user_id="user-00001", session_id=None, tematica="datos_comercio"):
     """
     Función para llamar a la API de Izipay con diferentes configuraciones según la temática
     """
@@ -63,7 +63,7 @@ def call_api(message, user_id="dev-user-test-003", session_id=None, tematica="da
             API_ENDPOINT,
             headers=API_HEADERS,
             json=base_config,
-            timeout=30
+            timeout=90
         )
 
         if response.status_code == 200:
@@ -109,6 +109,9 @@ if "tematica_seleccionada" not in st.session_state:
 
 # Título de la aplicación
 st.title("🤖 IziBot")
+# Mostrar temática activa
+tematica_nombre = "Mis datos de comercio" if st.session_state.tematica_seleccionada == "datos_comercio" else "Mis ventas y abonos"
+st.success(f"**Temática activa:** {tematica_nombre}")
 st.markdown("---")
 
 # Sidebar con información
@@ -133,8 +136,8 @@ with st.sidebar:
             st.rerun()
     
     # Mostrar temática activa
-    tematica_nombre = "Mis datos de comercio" if st.session_state.tematica_seleccionada == "datos_comercio" else "Mis ventas y abonos"
-    st.success(f"**Temática activa:** {tematica_nombre}")
+    #tematica_nombre = "Mis datos de comercio" if st.session_state.tematica_seleccionada == "datos_comercio" else "Mis ventas y abonos"
+    #st.success(f"**Temática activa:** {tematica_nombre}")
 
     # Configuración de usuario
     st.subheader("👤 Configuración")
