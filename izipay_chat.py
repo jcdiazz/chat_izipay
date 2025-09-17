@@ -24,7 +24,7 @@ def call_api(message, user_id="dev-user-test-003", session_id=None, tematica="da
     try:
         # Generar session_id único si no se proporciona
         if not session_id:
-            session_id = f"streamlit-session-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+            session_id = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}"
 
         # Configuración base común
         base_config = {
