@@ -149,7 +149,7 @@ with st.sidebar:
     with col3:
         st.code(st.session_state.session_id, language=None)
     with col4:
-        if st.button("🔄", key="refresh_session", help="Generar nueva Session ID"):
+        if st.button("🔄", key="refresh_session", help="Generar nuevo Session ID"):
             st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d%H%M%S')}"
             st.rerun()
 
