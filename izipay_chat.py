@@ -31,7 +31,7 @@ def call_api(message, user_id="user-00001", session_id=None, tematica="datos_com
             "question": message,
             "metadata": {
                 "userId": user_id,
-                "channelType": "Web",  # Cambiado a Web para Streamlit
+                "channelType": "Demo-Web",  # Cambiado a Web para Streamlit
                 "sessionId": session_id
             },
             "configuration": {
@@ -133,7 +133,7 @@ with st.sidebar:
             st.rerun()
 
     # Configuración de usuario
-    st.subheader("👤 Configuración")
+    st.subheader("⚙️ Configuración")
     new_user_id = st.text_input("User ID:", value=st.session_state.user_id)
     if new_user_id != st.session_state.user_id:
         st.session_state.user_id = new_user_id
@@ -144,7 +144,7 @@ with st.sidebar:
     if st.button("🗑️ Limpiar Chat", use_container_width=True):
         st.session_state.messages = []
         # Generar nuevo session_id
-        st.session_state.session_id = f"streamlit-session-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+        st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}"
         st.rerun()
 
 # Contenedor para el chat
