@@ -116,7 +116,7 @@ with st.sidebar:
     st.header("ℹ️ Temáticas")
     
     # Botones para seleccionar temática
-    col1, col2 = st.columns(2)
+    col1, col2 = st.rows(2)
     
     with col1:
         if st.button("🏪 Mis datos de comercio", 
