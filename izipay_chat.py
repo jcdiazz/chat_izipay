@@ -5,7 +5,7 @@ from datetime import datetime
 
 # Configuración de la página
 st.set_page_config(
-    page_title="Chat AI",
+    page_title="Chat izipay",
     page_icon="🤖",
     layout="wide"
 )
