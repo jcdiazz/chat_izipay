@@ -138,12 +138,13 @@ with st.sidebar:
 
     # Session ID con botón para generar nuevo
     st.write("**Session ID:**")
-    st.code(st.session_state.session_id, language=None)
-    
-    if st.button("🔄 Generar nueva Session ID", use_container_width=True):
-        st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}"
-        st.success("Nueva Session ID generada!")
-        st.rerun()
+    col3, col4 = st.columns([4, 1])
+    with col3:
+        st.code(st.session_state.session_id, language=None)
+    with col4:
+        if st.button("🔄", key="refresh_session", help="Generar nueva Session ID"):
+            st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+            st.rerun()
 
     # Botón para limpiar el chat
     if st.button("🗑️ Limpiar Chat", use_container_width=True):
