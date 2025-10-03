@@ -206,7 +206,7 @@ with chat_container:
 # Input para nuevo mensaje
 if prompt := st.chat_input("Escribe tu mensaje aquí..."):
     # Agregar mensaje del usuario al historial
-    timestamp = datetime.now(LIMA_TZ).strftime("%H:%M:%S")
+    timestamp = datetime.now(LIMA_TZ).strftime("%H:%M")
     st.session_state.messages.append({
         "role": "user",
         "content": prompt,
@@ -237,7 +237,7 @@ if prompt := st.chat_input("Escribe tu mensaje aquí..."):
                 response_info = response_data
 
             st.markdown(response_text)
-            response_timestamp = datetime.now(LIMA_TZ).strftime("%H:%M:%S")
+            response_timestamp = datetime.now(LIMA_TZ).strftime("%H:%M")
             st.caption(f"🕐 {response_timestamp}")
 
             # Mostrar información adicional si está disponible
