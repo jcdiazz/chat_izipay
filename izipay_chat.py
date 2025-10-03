@@ -117,7 +117,6 @@ if "tematica_seleccionada" not in st.session_state:
 
 # Título de la aplicación
 #tematica_nombre = "Mis datos de comercio" if st.session_state.tematica_seleccionada == "datos_comercio" else "Mis ventas y abonos"
-
 if st.session_state.tematica_seleccionada == "datos_comercio":
     tematica_nombre = "Mis datos de comercio"
 elif st.session_state.tematica_seleccionada == "ventas_abonos":
@@ -126,7 +125,6 @@ elif st.session_state.tematica_seleccionada == "productos_virtuales":
     tematica_nombre = "Otros productos virtuales"
 elif st.session_state.tematica_seleccionada == "solicitud_contometros":
     tematica_nombre = "Solicitud de contómetros"
-  
 st.title(f"🤖 {tematica_nombre}")
 
 # Sidebar con información
@@ -146,13 +144,13 @@ with st.sidebar:
         st.session_state.tematica_seleccionada = "ventas_abonos"
         st.rerun()
 
-    if st.button("💰 Otros productos virtuales", 
+    if st.button("📦 Otros productos virtuales", 
                 use_container_width=True,
                 type="primary" if st.session_state.tematica_seleccionada == "productos_virtuales" else "secondary"):
         st.session_state.tematica_seleccionada = "productos_virtuales"
         st.rerun()
 
-    if st.button("💰 Solicitud de contómetros", 
+    if st.button("🧻 Solicitud de contómetros", 
                 use_container_width=True,
                 type="primary" if st.session_state.tematica_seleccionada == "solicitud_contometros" else "secondary"):
         st.session_state.tematica_seleccionada = "solicitud_contometros"
