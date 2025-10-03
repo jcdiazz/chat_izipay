@@ -120,7 +120,6 @@ if "tematica_seleccionada" not in st.session_state:
     st.session_state.tematica_seleccionada = "datos_comercio"
 
 # Título de la aplicación
-#tematica_nombre = "Mis datos de comercio" if st.session_state.tematica_seleccionada == "datos_comercio" else "Mis ventas y abonos"
 if st.session_state.tematica_seleccionada == "datos_comercio":
     tematica_nombre = "Mis datos de comercio"
 elif st.session_state.tematica_seleccionada == "ventas_abonos":
@@ -194,8 +193,6 @@ with st.sidebar:
 
 # Contenedor para el chat
 chat_container = st.container()
-
-st.subheader(tematica_nombre)
 
 # Mostrar historial de mensajes
 with chat_container:
