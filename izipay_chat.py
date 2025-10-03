@@ -59,6 +59,14 @@ def call_api(message, user_id="USER-00001", session_id=None, tematica="datos_com
             base_config["configuration"]["prompt_params"]["conversation_purpose"] = "Atiende las consultas de los usuarios con entusiasmo y responde siempre de manera clara, breve y precisa. Tu misión principal es brindar soporte sobre todos los productos y servicios de Izipay, especialmente los terminales POS y cualquier otro servicio relacionado.\n- Tono: Siempre animado, profesional y directo.\n- Saludo del usuario: Si el usuario inicia con un saludo, no devuelvas el saludo. En lugar de eso, dile que puedes ayudarlo con sus preguntas sobre sus ventas y abonos.\n- Preguntas ambiguas: Si la pregunta no está clara, pide detalles específicos para poder ofrecer una respuesta adecuada.\n- Límites: Si no puedes resolver algo, redirige al usuario con instrucciones claras para contactar al equipo de soporte humano."
             base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_veab_azureopenai"]
 
+        elif tematica == "productos_virtuales":
+            base_config["configuration"]["prompt_params"]["conversation_purpose"] = "Atiende las consultas de los usuarios con entusiasmo y responde siempre de manera clara, breve y precisa. Tu misión principal es brindar soporte sobre todos los productos y servicios de Izipay, especialmente los terminales POS y cualquier otro servicio relacionado.\n- Tono: Siempre animado, profesional y directo.\n- Saludo del usuario: Si el usuario inicia con un saludo, no devuelvas el saludo. En lugar de eso, dile que puedes ayudarlo con sus preguntas sobre productos virtuales.\n- Preguntas ambiguas: Si la pregunta no está clara, pide detalles específicos para poder ofrecer una respuesta adecuada.\n- Límites: Si no puedes resolver algo, redirige al usuario con instrucciones claras para contactar al equipo de soporte humano."
+            base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_prvi_azureopenai"]
+
+        elif tematica == "solicitud_contometros":
+            base_config["configuration"]["prompt_params"]["conversation_purpose"] = "Atiende las consultas de los usuarios con entusiasmo y responde siempre de manera clara, breve y precisa. Tu misión principal es brindar soporte sobre todos los productos y servicios de Izipay, especialmente los terminales POS y cualquier otro servicio relacionado.\n- Tono: Siempre animado, profesional y directo.\n- Saludo del usuario: Si el usuario inicia con un saludo, no devuelvas el saludo. En lugar de eso, dile que puedes ayudarlo con sus preguntas sobre solicitud de contómetros.\n- Preguntas ambiguas: Si la pregunta no está clara, pide detalles específicos para poder ofrecer una respuesta adecuada.\n- Límites: Si no puedes resolver algo, redirige al usuario con instrucciones claras para contactar al equipo de soporte humano."
+            base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_soco_azureopenai"]
+
         response = requests.post(
             API_ENDPOINT,
             headers=API_HEADERS,
@@ -108,8 +116,18 @@ if "tematica_seleccionada" not in st.session_state:
     st.session_state.tematica_seleccionada = "datos_comercio"
 
 # Título de la aplicación
-tematica_nombre = "Mis datos de comercio" if st.session_state.tematica_seleccionada == "datos_comercio" else "Mis ventas y abonos"
-st.title(f"🤖 {tematica_nombre}")
+#tematica_nombre = "Mis datos de comercio" if st.session_state.tematica_seleccionada == "datos_comercio" else "Mis ventas y abonos"
+
+if st.session_state.tematica_seleccionada == "datos_comercio":
+    tematica_nombre = "Mis datos de comercio"
+elif st.session_state.tematica_seleccionada == "ventas_abonos":
+    tematica_nombre = "Mis ventas y abonos"
+elif st.session_state.tematica_seleccionada == "productos_virtuales":
+    tematica_nombre = "Otros productos virtuales"
+elif st.session_state.tematica_seleccionada == "solicitud_contometros":
+    tematica_nombre = "Solicitud de contómetros"
+  
+#st.title(f"🤖 {tematica_nombre}")
 
 # Sidebar con información
 with st.sidebar:
@@ -126,6 +144,18 @@ with st.sidebar:
                 use_container_width=True,
                 type="primary" if st.session_state.tematica_seleccionada == "ventas_abonos" else "secondary"):
         st.session_state.tematica_seleccionada = "ventas_abonos"
+        st.rerun()
+
+    if st.button("💰 Otros productos virtuales", 
+                use_container_width=True,
+                type="primary" if st.session_state.tematica_seleccionada == "productos_virtuales" else "secondary"):
+        st.session_state.tematica_seleccionada = "productos_virtuales"
+        st.rerun()
+
+    if st.button("💰 Solicitud de contómetros", 
+                use_container_width=True,
+                type="primary" if st.session_state.tematica_seleccionada == "solicitud_contometros" else "secondary"):
+        st.session_state.tematica_seleccionada = "solicitud_contometros"
         st.rerun()
 
     # Configuración de usuario
