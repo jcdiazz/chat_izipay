@@ -195,6 +195,8 @@ with st.sidebar:
 # Contenedor para el chat
 chat_container = st.container()
 
+st.subheader(tematica_nombre)
+
 # Mostrar historial de mensajes
 with chat_container:
     for message in st.session_state.messages:
