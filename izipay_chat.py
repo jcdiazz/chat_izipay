@@ -2,6 +2,10 @@ import streamlit as st
 import requests
 import json
 from datetime import datetime
+from zoneinfo import ZoneInfo
+
+# Zona horaria de Lima, Perú
+LIMA_TZ = ZoneInfo("America/Lima")
 
 # Configuración de la página
 st.set_page_config(
@@ -24,7 +28,7 @@ def call_api(message, user_id="USER-00001", session_id=None, tematica="datos_com
     try:
         # Generar session_id único si no se proporciona
         if not session_id:
-            session_id = f"{datetime.now().strftime('%Y%m%d%H%M%S')}"
+            session_id = f"{datetime.now(LIMA_TZ).strftime('%Y%m%d%H%M%S')}"
 
         # Configuración base común
         base_config = {
@@ -109,9 +113,9 @@ def call_api(message, user_id="USER-00001", session_id=None, tematica="datos_com
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "session_id" not in st.session_state:
-    st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d%H%M%S')}"
+    st.session_state.session_id = f"{datetime.now(LIMA_TZ).strftime('%Y%m%d%H%M%S')}"
 if "user_id" not in st.session_state:
-    st.session_state.user_id = f"USER-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+    st.session_state.user_id = f"USER-{datetime.now(LIMA_TZ).strftime('%Y%m%d%H%M%S')}"
 if "tematica_seleccionada" not in st.session_state:
     st.session_state.tematica_seleccionada = "datos_comercio"
 
@@ -166,9 +170,9 @@ with st.sidebar:
         st.code(st.session_state.user_id, language=None)
     with col2:
         if st.button("🔄", key="refresh_user", help="Generar nuevo User ID"):
-            st.session_state.user_id = f"USER-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+            st.session_state.user_id = f"USER-{datetime.now(LIMA_TZ).strftime('%Y%m%d%H%M%S')}"
             st.session_state.messages = []
-            st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d%H%M%S')}"
+            st.session_state.session_id = f"{datetime.now(LIMA_TZ).strftime('%Y%m%d%H%M%S')}"
             st.rerun()
 
     # Session ID con botón para generar nuevo
@@ -178,14 +182,14 @@ with st.sidebar:
         st.code(st.session_state.session_id, language=None)
     with col4:
         if st.button("🔄", key="refresh_session", help="Generar nuevo Session ID"):
-            st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d%H%M%S')}"
+            st.session_state.session_id = f"{datetime.now(LIMA_TZ).strftime('%Y%m%d%H%M%S')}"
             st.rerun()
 
     # Botón para limpiar el chat
     if st.button("🗑️ Limpiar Chat", use_container_width=True):
         st.session_state.messages = []
         # Generar nuevo session_id
-        st.session_state.session_id = f"{datetime.now().strftime('%Y%m%d%H%M%S')}"
+        st.session_state.session_id = f"{datetime.now(LIMA_TZ).strftime('%Y%m%d%H%M%S')}"
         st.rerun()
 
 # Contenedor para el chat
@@ -202,7 +206,7 @@ with chat_container:
 # Input para nuevo mensaje
 if prompt := st.chat_input("Escribe tu mensaje aquí..."):
     # Agregar mensaje del usuario al historial
-    timestamp = datetime.now().strftime("%H:%M:%S")
+    timestamp = datetime.now(LIMA_TZ).strftime("%H:%M:%S")
     st.session_state.messages.append({
         "role": "user",
         "content": prompt,
@@ -216,7 +220,7 @@ if prompt := st.chat_input("Escribe tu mensaje aquí..."):
     
     # Llamar a la API y mostrar respuesta
     with st.chat_message("assistant"):
-        with st.spinner("IziBot está procesando tu consulta..."):
+        with st.spinner("Pensando..."):
             response_data, error = call_api(
                 prompt, 
                 st.session_state.user_id, 
@@ -233,7 +237,7 @@ if prompt := st.chat_input("Escribe tu mensaje aquí..."):
                 response_info = response_data
 
             st.markdown(response_text)
-            response_timestamp = datetime.now().strftime("%H:%M:%S")
+            response_timestamp = datetime.now(LIMA_TZ).strftime("%H:%M:%S")
             st.caption(f"🕐 {response_timestamp}")
 
             # Mostrar información adicional si está disponible
