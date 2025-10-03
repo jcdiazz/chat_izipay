@@ -116,16 +116,16 @@ if "tematica_seleccionada" not in st.session_state:
     st.session_state.tematica_seleccionada = "datos_comercio"
 
 # Título de la aplicación
-tematica_nombre = "Mis datos de comercio" if st.session_state.tematica_seleccionada == "datos_comercio" else "Mis ventas y abonos"
+#tematica_nombre = "Mis datos de comercio" if st.session_state.tematica_seleccionada == "datos_comercio" else "Mis ventas y abonos"
 
-#if st.session_state.tematica_seleccionada == "datos_comercio":
-#    tematica_nombre = "Mis datos de comercio"
-#elif st.session_state.tematica_seleccionada == "ventas_abonos":
-#    tematica_nombre = "Mis ventas y abonos"
-#elif st.session_state.tematica_seleccionada == "productos_virtuales":
-#    tematica_nombre = "Otros productos virtuales"
-#elif st.session_state.tematica_seleccionada == "solicitud_contometros":
-#    tematica_nombre = "Solicitud de contómetros"
+if st.session_state.tematica_seleccionada == "datos_comercio":
+    tematica_nombre = "Mis datos de comercio"
+elif st.session_state.tematica_seleccionada == "ventas_abonos":
+    tematica_nombre = "Mis ventas y abonos"
+elif st.session_state.tematica_seleccionada == "productos_virtuales":
+    tematica_nombre = "Otros productos virtuales"
+elif st.session_state.tematica_seleccionada == "solicitud_contometros":
+    tematica_nombre = "Solicitud de contómetros"
   
 st.title(f"🤖 {tematica_nombre}")
 
