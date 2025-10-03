@@ -127,7 +127,7 @@ tematica_nombre = "Mis datos de comercio" if st.session_state.tematica_seleccion
 #elif st.session_state.tematica_seleccionada == "solicitud_contometros":
 #    tematica_nombre = "Solicitud de contómetros"
   
-#st.title(f"🤖 {tematica_nombre}")
+st.title(f"🤖 {tematica_nombre}")
 
 # Sidebar con información
 with st.sidebar:
