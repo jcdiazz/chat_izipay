@@ -53,7 +53,7 @@ def call_api(message, user_id=None, session_id=None, tematica="app_izipay"):
 
         # Configuración específica según la temática
         if tematica == "app_izipay":
-            base_config["configuration"]["knowledge_stores"] = ["dev_izipay_apiz_daco_azureopenai"]
+            base_config["configuration"]["knowledge_stores"] = ["dev_izipay_apiz_apiz_azureopenai"]
             
         elif tematica == "izipay_ya":
             base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_izya_azureopenai"]
@@ -230,34 +230,34 @@ with st.sidebar:
         st.rerun()
 
     # Configuración de usuario
-    st.subheader("Configuración")
+    st.subheader("⚙️ Gestión de Sesión")
+    
+    # Agrupamos los detalles técnicos en un desplegable para no saturar la vista
+    with st.expander("Ver IDs de Sesión y Usuario", expanded=False):
+        st.caption("Identificador de Usuario")
+        st.text_input("User ID", value=st.session_state.user_id, disabled=True, label_visibility="collapsed")
+        
+        st.caption("Identificador de Sesión")
+        st.text_input("Session ID", value=st.session_state.session_id, disabled=True, label_visibility="collapsed")
 
-    # User ID con botón para generar nuevo
-    st.write("User ID:")
-    col1, col2 = st.columns([4, 1])
-    with col1:
-        st.code(st.session_state.user_id, language=None)
-    with col2:
-        if st.button("Nuevo usuario", key="refresh_user", help="Generar nuevo User ID"):
+    # Acciones principales separadas para fácil acceso
+    col_actions_1, col_actions_2 = st.columns(2)
+    
+    with col_actions_1:
+        if st.button("👤 Nuevo Usuario", help="Reinicia identidad y chat", use_container_width=True):
             st.session_state.user_id = f"USER-{datetime.now(LIMA_TZ).strftime('%Y%m%d%H%M%S')}"
             st.session_state.messages = []
             st.session_state.session_id = f"SESSION-{datetime.now(LIMA_TZ).strftime('%Y%m%d%H%M%S')}"
             st.rerun()
-
-    # Session ID con botón para generar nuevo
-    st.write("Session ID:")
-    col3, col4 = st.columns([4, 1])
-    with col3:
-        st.code(st.session_state.session_id, language=None)
-    with col4:
-        if st.button("Nueva sesión", key="refresh_session", help="Generar nuevo Session ID"):
+            
+    with col_actions_2:
+        if st.button("💬 Nueva Sesión", help="Mantiene usuario, reinicia chat", use_container_width=True):
             st.session_state.session_id = f"SESSION-{datetime.now(LIMA_TZ).strftime('%Y%m%d%H%M%S')}"
             st.rerun()
 
-    # Botón para limpiar el chat
-    if st.button("🗑️ Limpiar Chat", use_container_width=True):
+    # Botón de limpieza destacado
+    if st.button("🗑️ Limpiar Historial", use_container_width=True, type="primary"):
         st.session_state.messages = []
-        # Generar nuevo session_id
         st.session_state.session_id = f"SESSION-{datetime.now(LIMA_TZ).strftime('%Y%m%d%H%M%S')}"
         st.rerun()
 
