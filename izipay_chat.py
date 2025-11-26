@@ -238,7 +238,7 @@ with st.sidebar:
     with col1:
         st.code(st.session_state.user_id, language=None)
     with col2:
-        if st.button("🔄", key="refresh_user", help="Generar nuevo User ID"):
+        if st.button("Nuevo usuario", key="refresh_user", help="Generar nuevo User ID"):
             st.session_state.user_id = f"USER-{datetime.now(LIMA_TZ).strftime('%Y%m%d%H%M%S')}"
             st.session_state.messages = []
             st.session_state.session_id = f"SESSION-{datetime.now(LIMA_TZ).strftime('%Y%m%d%H%M%S')}"
@@ -250,7 +250,7 @@ with st.sidebar:
     with col3:
         st.code(st.session_state.session_id, language=None)
     with col4:
-        if st.button("🔄", key="refresh_session", help="Generar nuevo Session ID"):
+        if st.button("Nueva sesión", key="refresh_session", help="Generar nuevo Session ID"):
             st.session_state.session_id = f"SESSION-{datetime.now(LIMA_TZ).strftime('%Y%m%d%H%M%S')}"
             st.rerun()
 
