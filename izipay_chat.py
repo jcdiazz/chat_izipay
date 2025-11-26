@@ -21,7 +21,7 @@ API_HEADERS = {
     "token": "dev-chatpgt-token-xbpr435"
 }
 
-def call_api(message, user_id=None, session_id=None, tematica="datos_comercio"):
+def call_api(message, user_id=None, session_id=None, tematica="app_izipay"):
     """
     Función para llamar a la API de Izipay con diferentes configuraciones según la temática
     """
@@ -52,11 +52,32 @@ def call_api(message, user_id=None, session_id=None, tematica="datos_comercio"):
         }
 
         # Configuración específica según la temática
-        if tematica == "datos_comercio":
-            base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_daco_azureopenai"]
+        if tematica == "app_izipay":
+            base_config["configuration"]["knowledge_stores"] = ["dev_izipay_apiz_daco_azureopenai"]
+            
+        elif tematica == "izipay_ya":
+            base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_izya_azureopenai"]
+
+        elif tematica == "soporte_tecnico":
+            base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_sote_azureopenai"]
+
+        elif tematica == "agente_izipay":
+            base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_agiz_azureopenai"]
+
+        elif tematica == "retiro_inmediato":
+            base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_rein_azureopenai"]
+
+        elif tematica == "arisale":
+            base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_aris_azureopenai"]
+
+        elif tematica == "compra_estatus_pedido":
+            base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_coes_azureopenai"]
         
         elif tematica == "ventas_abonos":
             base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_veab_azureopenai"]
+
+        elif tematica == "datos_comercio":
+            base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_daco_azureopenai"]
 
         elif tematica == "productos_virtuales":
             base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_prvi_azureopenai"]
