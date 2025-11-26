@@ -53,7 +53,7 @@ def call_api(message, user_id=None, session_id=None, tematica="app_izipay"):
 
         # Configuración específica según la temática
         if tematica == "app_izipay":
-            base_config["configuration"]["knowledge_stores"] = ["dev_izipay_apiz_apiz_azureopenai"]
+            base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_apiz_azureopenai"]
             
         elif tematica == "izipay_ya":
             base_config["configuration"]["knowledge_stores"] = ["dev_izipay_index_izya_azureopenai"]
