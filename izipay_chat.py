@@ -229,15 +229,17 @@ with st.sidebar:
         st.session_state.tematica_seleccionada = "solicitud_contometros"
         st.rerun()
 
-    # Configuración de usuario
-    st.subheader("⚙️ Gestión de Sesión")
+    st.markdown("---")
+
+    # Configuración de usuario y sesión
+    st.subheader("⚙️ Gestión de Usuario y Sesión")
     
     # Agrupamos los detalles técnicos en un desplegable para no saturar la vista
-    with st.expander("Ver IDs de Sesión y Usuario", expanded=False):
-        st.caption("Identificador de Usuario")
+    with st.expander("Ver Usuario y Sesión", expanded=False):
+        st.caption("Usuario")
         st.text_input("User ID", value=st.session_state.user_id, disabled=True, label_visibility="collapsed")
         
-        st.caption("Identificador de Sesión")
+        st.caption("Sesión")
         st.text_input("Session ID", value=st.session_state.session_id, disabled=True, label_visibility="collapsed")
 
     # Acciones principales separadas para fácil acceso
@@ -254,7 +256,9 @@ with st.sidebar:
         if st.button("💬 Nueva Sesión", help="Mantiene usuario, reinicia chat", use_container_width=True):
             st.session_state.session_id = f"SESSION-{datetime.now(LIMA_TZ).strftime('%Y%m%d%H%M%S')}"
             st.rerun()
-
+            
+    st.markdown("---")
+    
     # Botón de limpieza destacado
     if st.button("🗑️ Limpiar Historial", use_container_width=True, type="primary"):
         st.session_state.messages = []
