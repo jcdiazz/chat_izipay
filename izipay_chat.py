@@ -162,71 +162,42 @@ st.title(f"🤖 {tematica_nombre}")
 with st.sidebar:
     st.header("Temáticas")
     
-    # Botones para seleccionar temática
-    if st.button("App Izipay", 
-                use_container_width=True,
-                type="primary" if st.session_state.tematica_seleccionada == "app_izipay" else "secondary"):
-        st.session_state.tematica_seleccionada = "app_izipay"
-        st.rerun()
+    # 1. Definimos un diccionario para mapear el Nombre Visible -> Clave Interna
+    # Esto permite usar emojis y textos bonitos sin romper tu lógica interna de API
+    MAPA_TEMATICAS = {
+        "📱 App Izipay": "app_izipay",
+        "🚀 Izipay YA": "izipay_ya",
+        "🛠️ Soporte técnico": "soporte_tecnico",
+        "🏪 Agente Izipay": "agente_izipay",
+        "💸 Retiro inmediato": "retiro_inmediato",
+        "💳 Arisale": "arisale",
+        "📦 Compra/Estatus pedido": "compra_estatus_pedido",
+        "💰 Mis ventas y abonos": "ventas_abonos",
+        "🏢 Mis datos de comercio": "datos_comercio",
+        "🌐 Productos virtuales": "productos_virtuales",
+        "📄 Solicitud contómetros": "solicitud_contometros"
+    }
 
-    if st.button("Izipay YA", 
-                use_container_width=True,
-                type="primary" if st.session_state.tematica_seleccionada == "izipay_ya" else "secondary"):
-        st.session_state.tematica_seleccionada = "izipay_ya"
-        st.rerun()
+    # 2. Encontramos la opción actual para mantener la selección
+    # Buscamos qué llave del diccionario coincide con el estado actual
+    current_index = 0
+    keys_list = list(MAPA_TEMATICAS.values())
+    if st.session_state.tematica_seleccionada in keys_list:
+        current_index = keys_list.index(st.session_state.tematica_seleccionada)
 
-    if st.button("Soporte técnico", 
-                use_container_width=True,
-                type="primary" if st.session_state.tematica_seleccionada == "soporte_tecnico" else "secondary"):
-        st.session_state.tematica_seleccionada = "soporte_tecnico"
-        st.rerun()
+    # 3. El Widget de Selección
+    seleccion = st.radio(
+        "Selecciona una consulta:",
+        options=list(MAPA_TEMATICAS.keys()),
+        index=current_index,
+        label_visibility="collapsed" # Ocultamos el label para que se vea más limpio
+    )
 
-    if st.button("Agente Izipay", 
-                use_container_width=True,
-                type="primary" if st.session_state.tematica_seleccionada == "agente_izipay" else "secondary"):
-        st.session_state.tematica_seleccionada = "agente_izipay"
-        st.rerun()
-
-    if st.button("Retiro inmediato", 
-                use_container_width=True,
-                type="primary" if st.session_state.tematica_seleccionada == "retiro_inmediato" else "secondary"):
-        st.session_state.tematica_seleccionada = "retiro_inmediato"
-        st.rerun()
-
-    if st.button("Arisale", 
-                use_container_width=True,
-                type="primary" if st.session_state.tematica_seleccionada == "arisale" else "secondary"):
-        st.session_state.tematica_seleccionada = "arisale"
-        st.rerun()
-
-    if st.button("Compra o estatus de mi pedido", 
-                use_container_width=True,
-                type="primary" if st.session_state.tematica_seleccionada == "compra_estatus_pedido" else "secondary"):
-        st.session_state.tematica_seleccionada = "compra_estatus_pedido"
-        st.rerun()
-                    
-    if st.button("Mis ventas y abonos", 
-                use_container_width=True,
-                type="primary" if st.session_state.tematica_seleccionada == "ventas_abonos" else "secondary"):
-        st.session_state.tematica_seleccionada = "ventas_abonos"
-        st.rerun()
-                    
-    if st.button("Mis datos de comercio", 
-                use_container_width=True,
-                type="primary" if st.session_state.tematica_seleccionada == "datos_comercio" else "secondary"):
-        st.session_state.tematica_seleccionada = "datos_comercio"
-        st.rerun()
-
-    if st.button("Otros productos virtuales", 
-                use_container_width=True,
-                type="primary" if st.session_state.tematica_seleccionada == "productos_virtuales" else "secondary"):
-        st.session_state.tematica_seleccionada = "productos_virtuales"
-        st.rerun()
-
-    if st.button("Solicitud de contómetros", 
-                use_container_width=True,
-                type="primary" if st.session_state.tematica_seleccionada == "solicitud_contometros" else "secondary"):
-        st.session_state.tematica_seleccionada = "solicitud_contometros"
+    # 4. Actualizamos el estado automáticamente
+    # Si la selección cambia, actualizamos la session_state
+    nuevo_valor = MAPA_TEMATICAS[seleccion]
+    if st.session_state.tematica_seleccionada != nuevo_valor:
+        st.session_state.tematica_seleccionada = nuevo_valor
         st.rerun()
 
     st.markdown("---")
