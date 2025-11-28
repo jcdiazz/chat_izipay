@@ -24,7 +24,7 @@ def call_api(message, user_id=None, session_id=None, tematica="app_izipay"):
         
         if tematica in tematicas_bloque2:
             API_ENDPOINT = "https://dev-chat-izipay-postventa-genai-api-460336703195.us-central1.run.app/bloque2"
-        else 
+        else:
             API_ENDPOINT = "https://dev-chat-izipay-postventa-genai-api-460336703195.us-central1.run.app/conversation"
             
         API_HEADERS = {
