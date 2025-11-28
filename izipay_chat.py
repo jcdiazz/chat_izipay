@@ -14,18 +14,24 @@ st.set_page_config(
     layout="wide"
 )
 
-# Configuración de la API de Izipay
-API_ENDPOINT = "https://dev-chat-izipay-postventa-genai-api-460336703195.us-central1.run.app/conversation"
-API_HEADERS = {
-    "Content-Type": "application/json",
-    "token": "dev-chatpgt-token-xbpr435"
-}
-
 def call_api(message, user_id=None, session_id=None, tematica="app_izipay"):
     """
     Función para llamar a la API de Izipay con diferentes configuraciones según la temática
     """
     try:
+        # Configuración de la API de Izipay
+        tematicas_bloque2 = ["ventas_abonos", "datos_comercio", "productos_virtuales", "solicitud_contometros"]
+        
+        if tematica in tematicas_bloque2:
+            API_ENDPOINT = "https://dev-chat-izipay-postventa-genai-api-460336703195.us-central1.run.app/bloque2"
+        else 
+            API_ENDPOINT = "https://dev-chat-izipay-postventa-genai-api-460336703195.us-central1.run.app/conversation"
+            
+        API_HEADERS = {
+            "Content-Type": "application/json",
+            "token": "dev-chatpgt-token-xbpr435"
+        }
+        
         # Configuración base común
         base_config = {
             "question": message,
